@@ -3,10 +3,46 @@ const router = express.Router();
 const Joi = require("joi");
 
 const users = [
-  { id: 0, firstName: "Bob", lastName: "Dob" },
-  { id: 1, firstName: "Bill", lastName: "Murray" },
-  { id: 2, firstName: "Ryan", lastName: "Reynolds" },
-  { id: 3, firstName: "Lexi", lastName: "Beckstead" }
+  {
+    id: 0,
+    firstName: "Bob",
+    lastName: "Dob",
+    phoneNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    hasAgreed: false
+  },
+  {
+    id: 1,
+    firstName: "Bill",
+    lastName: "Murray",
+    phoneNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    hasAgreed: false
+  },
+  {
+    id: 2,
+    firstName: "Ryan",
+    lastName: "Reynolds",
+    phoneNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    hasAgreed: false
+  },
+  {
+    id: 3,
+    firstName: "Lexi",
+    lastName: "Beckstead",
+    phoneNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    hasAgreed: false
+  }
 ];
 
 router.get("/", (req, res) => {
@@ -27,7 +63,12 @@ router.post("/", (req, res) => {
   const user = {
     id: users.length,
     firstName: req.body.firstName,
-    lastName: req.body.lastName
+    lastName: req.body.lastName,
+    phoneNumber: req.body.phoneNumber,
+    email: req.body.email,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    hasAgreed: req.body.hasAgreed
   };
 
   users.push(user);
@@ -45,6 +86,12 @@ router.put("/:id", (req, res) => {
 
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
+  user.phoneNumber = req.body.phoneNumber;
+  user.email = req.body.email;
+  user.password = req.body.password;
+  user.confirmPassword = req.body.confirmPassword;
+  user.hasAgreed = req.body.hasAgreed;
+
   res.send(user);
 });
 
@@ -64,8 +111,26 @@ const validateUser = user => {
     lastName: Joi.string()
       .min(2)
       .max(24)
-      .required()
+      .required(),
+    phoneNumber: Joi.string()
+      .min(2)
+      .max(24)
+      .required(),
+    email: Joi.string()
+      .min(2)
+      .max(24)
+      .required(),
+    password: Joi.string()
+      .min(2)
+      .max(24)
+      .required(),
+    confirmPassword: Joi.string()
+      .min(2)
+      .max(24)
+      .required(),
+    hasAgreed: Joi.boolean().required()
   };
+
   return Joi.validate(user, schema);
 };
 
